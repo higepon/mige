@@ -7,8 +7,11 @@
 //
 
 #import "ViewController.h"
+#import "SpeechToTextModule.h"
 
 @interface ViewController ()
+
+@property SpeechToTextModule* speechToText;
 
 @end
 
@@ -17,6 +20,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.speechToText = [[SpeechToTextModule alloc] init];    
 	// Do any additional setup after loading the view, typically from a nib.
 }
 

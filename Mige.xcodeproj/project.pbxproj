@@ -18,7 +18,26 @@
 		B33259F516E71AFD00B3FA5A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B33259F416E71AFD00B3FA5A /* Default-568h@2x.png */; };
 		B33259F816E71AFD00B3FA5A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B33259F716E71AFD00B3FA5A /* ViewController.m */; };
 		B33259FB16E71AFD00B3FA5A /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33259F916E71AFD00B3FA5A /* ViewController.xib */; };
+		B3325A0F16E71E7B00B3FA5A /* libSpeechToText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3325A0C16E71E5F00B3FA5A /* libSpeechToText.a */; };
+		B3325A1116E7200A00B3FA5A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3325A1016E7200A00B3FA5A /* AudioToolbox.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B3325A0B16E71E5F00B3FA5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3325A0716E71E5E00B3FA5A /* SpeechToText.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 222835F4143E9EBD000D6E05;
+			remoteInfo = SpeechToText;
+		};
+		B3325A0D16E71E6600B3FA5A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B3325A0716E71E5E00B3FA5A /* SpeechToText.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 222835F3143E9EBD000D6E05;
+			remoteInfo = SpeechToText;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		B33259DB16E71AFD00B3FA5A /* Mige.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mige.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -37,6 +56,8 @@
 		B33259F616E71AFD00B3FA5A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		B33259F716E71AFD00B3FA5A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B33259FA16E71AFD00B3FA5A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		B3325A0716E71E5E00B3FA5A /* SpeechToText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SpeechToText.xcodeproj; path = "iPhone-Speech-To-Text/SpeechToText.xcodeproj"; sourceTree = "<group>"; };
+		B3325A1016E7200A00B3FA5A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -44,6 +65,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3325A1116E7200A00B3FA5A /* AudioToolbox.framework in Frameworks */,
+				B3325A0F16E71E7B00B3FA5A /* libSpeechToText.a in Frameworks */,
 				B33259DF16E71AFD00B3FA5A /* UIKit.framework in Frameworks */,
 				B33259E116E71AFD00B3FA5A /* Foundation.framework in Frameworks */,
 				B33259E316E71AFD00B3FA5A /* CoreGraphics.framework in Frameworks */,
@@ -56,6 +79,8 @@
 		B33259D216E71AFC00B3FA5A = {
 			isa = PBXGroup;
 			children = (
+				B3325A1016E7200A00B3FA5A /* AudioToolbox.framework */,
+				B3325A0716E71E5E00B3FA5A /* SpeechToText.xcodeproj */,
 				B33259E416E71AFD00B3FA5A /* Mige */,
 				B33259DD16E71AFD00B3FA5A /* Frameworks */,
 				B33259DC16E71AFD00B3FA5A /* Products */,
@@ -107,6 +132,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		B3325A0816E71E5E00B3FA5A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B3325A0C16E71E5F00B3FA5A /* libSpeechToText.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -121,6 +154,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B3325A0E16E71E6600B3FA5A /* PBXTargetDependency */,
 			);
 			name = Mige;
 			productName = Mige;
@@ -146,12 +180,28 @@
 			mainGroup = B33259D216E71AFC00B3FA5A;
 			productRefGroup = B33259DC16E71AFD00B3FA5A /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B3325A0816E71E5E00B3FA5A /* Products */;
+					ProjectRef = B3325A0716E71E5E00B3FA5A /* SpeechToText.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B33259DA16E71AFD00B3FA5A /* Mige */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B3325A0C16E71E5F00B3FA5A /* libSpeechToText.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSpeechToText.a;
+			remoteRef = B3325A0B16E71E5F00B3FA5A /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B33259D916E71AFD00B3FA5A /* Resources */ = {
@@ -180,6 +230,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B3325A0E16E71E6600B3FA5A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SpeechToText;
+			targetProxy = B3325A0D16E71E6600B3FA5A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B33259E716E71AFD00B3FA5A /* InfoPlist.strings */ = {
@@ -262,6 +320,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mige/Mige-Prefix.pch";
+				HEADER_SEARCH_PATHS = "./iPhone-Speech-To-Text/**";
 				INFOPLIST_FILE = "Mige/Mige-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -273,6 +332,7 @@
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Mige/Mige-Prefix.pch";
+				HEADER_SEARCH_PATHS = "./iPhone-Speech-To-Text/**";
 				INFOPLIST_FILE = "Mige/Mige-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -298,6 +358,7 @@
 				B3325A0016E71AFD00B3FA5A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
