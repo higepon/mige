@@ -32,12 +32,6 @@
     [self.recordButton addTarget:self action:@selector(record:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.recordButton];
     
-    self.stopButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [self.stopButton setTitle:@"stop" forState:UIControlStateNormal];
-    self.stopButton.frame = CGRectMake(10, 50, 100, 30);
-    [self.stopButton addTarget:self action:@selector(stop:) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:self.stopButton];
-    
     self.commandLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, 200, 40)];
     [self.view addSubview:self.commandLabel];
     
