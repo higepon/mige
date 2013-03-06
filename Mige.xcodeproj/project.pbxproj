@@ -20,6 +20,7 @@
 		B33259FB16E71AFD00B3FA5A /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B33259F916E71AFD00B3FA5A /* ViewController.xib */; };
 		B3325A0F16E71E7B00B3FA5A /* libSpeechToText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3325A0C16E71E5F00B3FA5A /* libSpeechToText.a */; };
 		B3325A1116E7200A00B3FA5A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3325A1016E7200A00B3FA5A /* AudioToolbox.framework */; };
+		B3325A1716E7216F00B3FA5A /* Launcher.m in Sources */ = {isa = PBXBuildFile; fileRef = B3325A1616E7216F00B3FA5A /* Launcher.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,8 @@
 		B33259FA16E71AFD00B3FA5A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		B3325A0716E71E5E00B3FA5A /* SpeechToText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SpeechToText.xcodeproj; path = "iPhone-Speech-To-Text/SpeechToText.xcodeproj"; sourceTree = "<group>"; };
 		B3325A1016E7200A00B3FA5A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		B3325A1516E7216F00B3FA5A /* Launcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Launcher.h; sourceTree = "<group>"; };
+		B3325A1616E7216F00B3FA5A /* Launcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Launcher.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,8 @@
 			children = (
 				B33259ED16E71AFD00B3FA5A /* AppDelegate.h */,
 				B33259EE16E71AFD00B3FA5A /* AppDelegate.m */,
+				B3325A1516E7216F00B3FA5A /* Launcher.h */,
+				B3325A1616E7216F00B3FA5A /* Launcher.m */,
 				B33259F616E71AFD00B3FA5A /* ViewController.h */,
 				B33259F716E71AFD00B3FA5A /* ViewController.m */,
 				B33259F916E71AFD00B3FA5A /* ViewController.xib */,
@@ -226,6 +231,7 @@
 				B33259EB16E71AFD00B3FA5A /* main.m in Sources */,
 				B33259EF16E71AFD00B3FA5A /* AppDelegate.m in Sources */,
 				B33259F816E71AFD00B3FA5A /* ViewController.m in Sources */,
+				B3325A1716E7216F00B3FA5A /* Launcher.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

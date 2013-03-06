@@ -8,9 +8,13 @@
 
 #import "ViewController.h"
 #import "SpeechToTextModule.h"
+#import "Launcher.h"
 
-@interface ViewController ()
+@interface ViewController () <SpeechToTextModuleDelegate>
 
+@property UIButton* recordButton;
+@property UIButton* stopButton;
+@property UILabel* commandLabel;
 @property SpeechToTextModule* speechToText;
 
 @end
@@ -20,8 +24,69 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.speechToText = [[SpeechToTextModule alloc] init];    
+    self.speechToText = [[SpeechToTextModule alloc] init];
+    self.speechToText.delegate = self;
+    self.recordButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.recordButton setTitle:@"record" forState:UIControlStateNormal];
+    self.recordButton.frame = CGRectMake(10, 10, 100, 30);
+    [self.recordButton addTarget:self action:@selector(record:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.recordButton];
+    
+    self.stopButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [self.stopButton setTitle:@"stop" forState:UIControlStateNormal];
+    self.stopButton.frame = CGRectMake(10, 50, 100, 30);
+    [self.stopButton addTarget:self action:@selector(stop:) forControlEvents:UIControlEventTouchDown];
+    [self.view addSubview:self.stopButton];
+    
+    self.commandLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, 200, 40)];
+    [self.view addSubview:self.commandLabel];
+    
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+- (NSString*)extractTextFromJson:(NSData*)data
+{
+    NSError* myError = nil;
+    NSDictionary* json = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableLeaves error:&myError];
+    
+    NSArray* hypotheses = [json objectForKey:@"hypotheses"];
+    if (hypotheses.count > 0) {
+        NSDictionary* hypothesis = [hypotheses objectAtIndex:0];
+        return [hypothesis objectForKey:@"utterance"];
+    }
+    return @"";
+}
+
+
+
+- (BOOL)didReceiveVoiceResponse:(NSData *)data
+{
+    NSDictionary* commandDict = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 @"comgooglemaps://?saddr=&daddr=Suite+900,+1355+Market+St,+San+Francisco,+CA&directionsmode=transit", @"directions to Twitter", @"value2", @"key2", nil];
+    
+    self.commandLabel.text = [self extractTextFromJson:data];
+    NSString* url = [commandDict objectForKey:self.commandLabel.text];
+    if (url) {
+        if ([Launcher tryOpenURL:url]) {
+            NSLog(@"YES");
+        } else {
+            NSLog(@"NO");
+        }
+    }
+    NSLog(@"command was %@", self.commandLabel.text);
+    return YES;
+}
+
+- (void)record:(UIButton*)button
+{
+    NSLog(@"start");
+    [self.speechToText beginRecording];
+}
+
+- (void)stop:(UIButton*)button
+{
+    NSLog(@"stop");
+    [self.speechToText stopRecording:YES];
 }
 
 - (void)didReceiveMemoryWarning
