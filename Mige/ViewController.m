@@ -21,6 +21,13 @@
 
 @implementation ViewController
 
+// Make the button bigger
+// Start recording whenever it's comming foreground.
+//   No need to push the button
+//   show status "recording" or "stop"
+// Register more commands
+// Good parts
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -32,10 +39,18 @@
     [self.recordButton addTarget:self action:@selector(record:) forControlEvents:UIControlEventTouchDown];
     [self.view addSubview:self.recordButton];
     
-    self.commandLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 100, 200, 40)];
+    self.commandLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 200, 200, 100)];
     [self.view addSubview:self.commandLabel];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onForeground)
+                                                               name:UIApplicationDidBecomeActiveNotification object:nil];
 	// Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)onForeground
+{
+    NSLog(@"Foreground!");
+    [self.speechToText beginRecording];    
 }
 
 - (NSString*)extractTextFromJson:(NSData*)data
