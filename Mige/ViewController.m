@@ -47,10 +47,16 @@
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
+// This is called when SpeechToText posts audio data to Google API
+- (void)showLoadingView
+{
+    self.commandLabel.text = @"processing...";    
+}
+
 - (void)onForeground
 {
-    NSLog(@"Foreground!");
-    [self.speechToText beginRecording];    
+    [self.speechToText beginRecording];
+    self.commandLabel.text = @"recording...";
 }
 
 - (NSString*)extractTextFromJson:(NSData*)data
@@ -88,7 +94,7 @@
 
 - (void)record:(UIButton*)button
 {
-    NSLog(@"start");
+    self.commandLabel.text = @"recording...";
     [self.speechToText beginRecording];
 }
 
