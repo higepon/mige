@@ -27,6 +27,7 @@
 //   show status "recording" or "stop"
 // Register more commands
 // Good parts
+//   search parts available for free
 
 - (void)viewDidLoad
 {
@@ -44,6 +45,14 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onForeground)
                                                                name:UIApplicationDidBecomeActiveNotification object:nil];
+    
+    UIImage* img = [UIImage imageNamed:@"Voice_Memos.png"];
+    UIButton* btn = [[UIButton alloc] initWithFrame:CGRectMake(150, 200, 60, 60)];
+    [btn setBackgroundImage:img forState:UIControlStateNormal];
+
+    [btn addTarget:self
+            action:@selector(record:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview: btn];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
