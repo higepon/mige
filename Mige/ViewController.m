@@ -31,17 +31,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.view.backgroundColor = [UIColor blackColor];
     self.speechToText = [[SpeechToTextModule alloc] init];
     self.speechToText.delegate = self;
     
-    self.commandLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 200, 200, 100)];
+    self.commandLabel = [[UILabel alloc] initWithFrame:CGRectMake(120, 240, 200, 50)];
+    self.commandLabel.backgroundColor = [UIColor blackColor];
+    self.commandLabel.textColor = [UIColor grayColor];
     [self.view addSubview:self.commandLabel];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onForeground)
                                                                name:UIApplicationDidBecomeActiveNotification object:nil];
     
     UIImage* img = [UIImage imageNamed:@"Voice_Memos.png"];
-    UIButton* btn = [[UIButton alloc] initWithFrame:CGRectMake(150, 200, 60, 60)];
+    UIButton* btn = [[UIButton alloc] initWithFrame:CGRectMake(130, 180, 60, 60)];
     [btn setBackgroundImage:img forState:UIControlStateNormal];
 
     [btn addTarget:self
