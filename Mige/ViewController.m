@@ -12,7 +12,6 @@
 
 @interface ViewController () <SpeechToTextModuleDelegate>
 
-@property UIButton* recordButton;
 @property UIButton* stopButton;
 @property UILabel* commandLabel;
 @property SpeechToTextModule* speechToText;
@@ -34,11 +33,6 @@
     [super viewDidLoad];
     self.speechToText = [[SpeechToTextModule alloc] init];
     self.speechToText.delegate = self;
-    self.recordButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    [self.recordButton setTitle:@"record" forState:UIControlStateNormal];
-    self.recordButton.frame = CGRectMake(10, 10, 100, 30);
-    [self.recordButton addTarget:self action:@selector(record:) forControlEvents:UIControlEventTouchDown];
-    [self.view addSubview:self.recordButton];
     
     self.commandLabel = [[UILabel alloc] initWithFrame:CGRectMake(100, 200, 200, 100)];
     [self.view addSubview:self.commandLabel];
