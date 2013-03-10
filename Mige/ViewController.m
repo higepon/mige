@@ -27,6 +27,7 @@
 // Register more commands
 // Good parts
 //   search parts available for free
+// Tweet URL
 
 - (void)viewDidLoad
 {
@@ -83,7 +84,11 @@
 - (BOOL)didReceiveVoiceResponse:(NSData *)data
 {
     NSDictionary* commandDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                 @"comgooglemaps://?saddr=&daddr=Suite+900,+1355+Market+St,+San+Francisco,+CA&directionsmode=transit", @"directions to Twitter", @"value2", @"key2", nil];
+                                 @"comgooglemaps://?saddr=&daddr=Suite+900,+1355+Market+St,+San+Francisco,+CA&directionsmode=transit", @"directions to Twitter",
+                                    @"twitter://post?message=", @"Twitter", @"fb://publish/?text=", @"Facebook",
+                                    @"googlegmail:///co?subject=&body=&to=higepon@gmail.com", @"Gmail", nil];
+
+    
     
     self.commandLabel.text = [self extractTextFromJson:data];
     NSString* url = [commandDict objectForKey:self.commandLabel.text];
