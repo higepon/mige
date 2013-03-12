@@ -13,7 +13,7 @@
 + (BOOL)tryOpenURL:(NSString*)url
 {
     UIApplication* ourApplication = [UIApplication sharedApplication];
-    BOOL isAppInstalled=[[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:url]];
+    BOOL isAppInstalled = [[UIApplication sharedApplication] canOpenURL: [NSURL URLWithString:url]];
     if(isAppInstalled) {
         NSURL *ourURL = [NSURL URLWithString:url];
         [ourApplication openURL:ourURL];

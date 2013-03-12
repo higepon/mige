@@ -94,7 +94,18 @@
     
     
     self.commandLabel.text = [self extractTextFromJson:data];
-    NSString* url = [commandDict objectForKey:self.commandLabel.text];
+    
+    // split string
+    NSString* url = NULL;
+    NSArray* words = [self.commandLabel.text componentsSeparatedByString: @" "];
+    NSLog(@"%@", words);
+    if ([words count] > 1 && [[words objectAtIndex:0] isEqualToString:@"Google"]) {
+        
+        NSArray* keywords = [words subarrayWithRange:NSMakeRange(1, words.count - 1)];
+        url = [NSString stringWithFormat:@"http://www.google.com/search?q=%@", [keywords componentsJoinedByString:@"%20"]];
+    } else {
+        url = [commandDict objectForKey:self.commandLabel.text];
+    }
     if (url) {
         if ([Launcher tryOpenURL:url]) {
             NSLog(@"YES");
