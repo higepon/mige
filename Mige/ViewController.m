@@ -28,6 +28,7 @@
 // Good parts
 //   search parts available for free
 // Tweet URL
+// Google search
 
 - (void)viewDidLoad
 {
@@ -45,7 +46,7 @@
                                                                name:UIApplicationDidBecomeActiveNotification object:nil];
     
     UIImage* img = [UIImage imageNamed:@"Voice_Memos.png"];
-    UIButton* btn = [[UIButton alloc] initWithFrame:CGRectMake(130, 180, 60, 60)];
+    UIButton* btn = [[UIButton alloc] initWithFrame:CGRectMake(130, 320, 60, 60)];
     [btn setBackgroundImage:img forState:UIControlStateNormal];
 
     [btn addTarget:self
@@ -86,7 +87,9 @@
     NSDictionary* commandDict = [[NSDictionary alloc] initWithObjectsAndKeys:
                                  @"comgooglemaps://?saddr=&daddr=Suite+900,+1355+Market+St,+San+Francisco,+CA&directionsmode=transit", @"directions to Twitter",
                                     @"twitter://post?message=", @"Twitter", @"fb://publish/?text=", @"Facebook",
-                                    @"googlegmail:///co?subject=&body=&to=higepon@gmail.com", @"Gmail", nil];
+                                    @"googlegmail:///co?subject=&body=&to=higepon@gmail.com", @"Gmail",
+                                    @"instagram://camera", @"camera",
+                                    @"jp.gocro.smartnews://", @"news", nil];
 
     
     
