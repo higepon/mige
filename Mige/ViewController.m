@@ -88,7 +88,7 @@
                                  @"comgooglemaps://?saddr=&daddr=Suite+900,+1355+Market+St,+San+Francisco,+CA&directionsmode=transit", @"directions to Twitter",
                                     @"twitter://post?message=", @"Twitter", @"fb://publish/?text=", @"Facebook",
                                     @"googlegmail:///co?subject=&body=&to=higepon@gmail.com", @"Gmail",
-                                    @"instagram://camera", @"camera",
+                                    @"camplus://", @"camera",
                                     @"jp.gocro.smartnews://", @"news", nil];
 
     
