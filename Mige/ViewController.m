@@ -31,6 +31,9 @@
 // Tweet URL
 // Google search
 
+// Next step
+//   How to handle google query in config
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
