@@ -22,6 +22,7 @@
 		B3325A1116E7200A00B3FA5A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3325A1016E7200A00B3FA5A /* AudioToolbox.framework */; };
 		B3325A1716E7216F00B3FA5A /* Launcher.m in Sources */ = {isa = PBXBuildFile; fileRef = B3325A1616E7216F00B3FA5A /* Launcher.m */; };
 		B3325A1A16E85A6800B3FA5A /* Voice_Memos.png in Resources */ = {isa = PBXBuildFile; fileRef = B3325A1916E85A6800B3FA5A /* Voice_Memos.png */; };
+		B3325A1E16F0412B00B3FA5A /* ConfigGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = B3325A1D16F0412B00B3FA5A /* ConfigGetter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,8 @@
 		B3325A1516E7216F00B3FA5A /* Launcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Launcher.h; sourceTree = "<group>"; };
 		B3325A1616E7216F00B3FA5A /* Launcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Launcher.m; sourceTree = "<group>"; };
 		B3325A1916E85A6800B3FA5A /* Voice_Memos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Voice_Memos.png; sourceTree = "<group>"; };
+		B3325A1C16F0412B00B3FA5A /* ConfigGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigGetter.h; sourceTree = "<group>"; };
+		B3325A1D16F0412B00B3FA5A /* ConfigGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigGetter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,8 @@
 				B33259F716E71AFD00B3FA5A /* ViewController.m */,
 				B33259F916E71AFD00B3FA5A /* ViewController.xib */,
 				B33259E516E71AFD00B3FA5A /* Supporting Files */,
+				B3325A1C16F0412B00B3FA5A /* ConfigGetter.h */,
+				B3325A1D16F0412B00B3FA5A /* ConfigGetter.m */,
 			);
 			path = Mige;
 			sourceTree = "<group>";
@@ -236,6 +241,7 @@
 				B33259EF16E71AFD00B3FA5A /* AppDelegate.m in Sources */,
 				B33259F816E71AFD00B3FA5A /* ViewController.m in Sources */,
 				B3325A1716E7216F00B3FA5A /* Launcher.m in Sources */,
+				B3325A1E16F0412B00B3FA5A /* ConfigGetter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

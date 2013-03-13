@@ -9,8 +9,9 @@
 #import "ViewController.h"
 #import "SpeechToTextModule.h"
 #import "Launcher.h"
+#import "ConfigGetter.h"
 
-@interface ViewController () <SpeechToTextModuleDelegate>
+@interface ViewController () <SpeechToTextModuleDelegate, ConfigGetterDelegate>
 
 @property UIButton* stopButton;
 @property UILabel* commandLabel;
@@ -52,6 +53,8 @@
     [btn addTarget:self
             action:@selector(record:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview: btn];
+    
+    [ConfigGetter getConfig:self];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -135,4 +138,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)didReceiveConfig:(NSDictionary *)config
+{
+    NSLog(@"Config=%@", config);
+}
 @end
