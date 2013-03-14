@@ -101,6 +101,15 @@
     
     self.commandLabel.text = [self extractTextFromJson:data];
     
+    // split by string
+    // if first word is found at the dictionary, then get value as Dictionary
+    //   check the keyword length
+    //   tokenize
+    //   check the length
+    //   create url
+    //   then go
+    //   anything else
+    
     // split string
     NSString* url = NULL;
     NSArray* words = [self.commandLabel.text componentsSeparatedByString: @" "];
