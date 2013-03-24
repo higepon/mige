@@ -13,7 +13,7 @@
 
 @interface ViewController () <SpeechToTextModuleDelegate, ConfigGetterDelegate>
 
-@property UIButton* stopButton;
+@property UIButton* recordButton;
 @property UILabel* commandLabel;
 @property SpeechToTextModule* speechToText;
 
@@ -50,14 +50,24 @@
                                                                name:UIApplicationDidBecomeActiveNotification object:nil];
     
     UIImage* img = [UIImage imageNamed:@"Voice_Memos.png"];
-    UIButton* btn = [[UIButton alloc] initWithFrame:CGRectMake(130, 320, 60, 60)];
-    [btn setBackgroundImage:img forState:UIControlStateNormal];
+    self.recordButton = [[UIButton alloc] initWithFrame:CGRectMake(130, 320, 60, 60)];
+    [self.recordButton setBackgroundImage:img forState:UIControlStateNormal];
 
-    [btn addTarget:self
+    [self.recordButton addTarget:self
             action:@selector(record:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview: btn];
+    [self.view addSubview: self.recordButton];
     
     [ConfigGetter getConfig:self];
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [UIView beginAnimations:nil context:context];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(endAnimation)];
+    
+    [self.recordButton setTransform:CGAffineTransformMakeScale(1.2, 1.2)];
+    [self.recordButton setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
+    [UIView commitAnimations];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
@@ -71,6 +81,7 @@
 {
     [self.speechToText beginRecording];
     self.commandLabel.text = @"recording...";
+
 }
 
 - (NSString*)extractTextFromJson:(NSData*)data
@@ -90,17 +101,22 @@
 
 - (BOOL)didReceiveVoiceResponse:(NSData *)data
 {
+//    NSDictionary* googleSearch = [[NSDictionary alloc] initWithObjectsAndKeys:@"num_params", 2, @"url", @"http://www.google.com/search?q=%s", nil];
     NSDictionary* commandDict = [[NSDictionary alloc] initWithObjectsAndKeys:
                                  @"comgooglemaps://?saddr=&daddr=Suite+900,+1355+Market+St,+San+Francisco,+CA&directionsmode=transit", @"directions to Twitter",
                                     @"twitter://post?message=", @"Twitter", @"fb://publish/?text=", @"Facebook",
-                                    @"googlegmail:///co?subject=&body=&to=higepon@gmail.com", @"Gmail",
+                                    @"twitter://timeline", @"home",
+                                    @"twitter://mentions", @"connect",
+                                    @"googlegmail://co?subject=&body=&to=higepon@gmail.com", @"Gmail",
+//                                    googleSearch, @"Google",
                                     @"camplus://", @"camera",
+                                 @"foursquare://", @"Foursquare",
                                     @"jp.gocro.smartnews://", @"news", nil];
 
     
     
     self.commandLabel.text = [self extractTextFromJson:data];
-    
+    NSArray* words = [self.commandLabel.text componentsSeparatedByString: @" "];    
     // split by string
     // if first word is found at the dictionary, then get value as Dictionary
     //   check the keyword length
@@ -109,11 +125,31 @@
     //   create url
     //   then go
     //   anything else
-    
+/*
     // split string
-    NSString* url = NULL;
     NSArray* words = [self.commandLabel.text componentsSeparatedByString: @" "];
+    if ([words count] > 1) {
+        NSString* first = [words objectAtIndex:0];
+        NSDictionary* action = [commandDict objectForKey:first];
+        if (action) {
+            NSNumber* numParams = [action objectForKey:@"num_params"];
+            if ([words count] - 1 == numParams.intValue) {
+                NSString* url = [action objectForKey:@"url"];
+                NSString* result = url;
+                if (url) {
+                    for (int i = 0; i < numparams.intValue; i++) {
+                        result = [NSString stringWithFormat:result, []
+                    }
+                    
+                }
+            }
+            
+        }
+    }
+    
     NSLog(@"%@", words);
+                                  */
+    NSString* url;
     if ([words count] > 1 && [[words objectAtIndex:0] isEqualToString:@"Google"]) {
         
         NSArray* keywords = [words subarrayWithRange:NSMakeRange(1, words.count - 1)];
@@ -135,7 +171,13 @@
 - (void)record:(UIButton*)button
 {
     self.commandLabel.text = @"recording...";
+
     [self.speechToText beginRecording];
+}
+
+- (void)endAnimation
+{
+    NSLog(@"end animation");
 }
 
 - (void)stop:(UIButton*)button
