@@ -168,10 +168,9 @@
     [self.speechToText beginRecording];
 }
 
-double angle = 0.125;
-
 - (void)startRecordingAnimation
 {
+    static double angle = 0;
     angle += 0.125;
     CGContextRef context = UIGraphicsGetCurrentContext();
     [UIView beginAnimations:nil context:context];
