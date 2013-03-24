@@ -31,6 +31,19 @@
 // Tweet URL
 // Google search
 
+- (void)startRecordingAnimation
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [UIView beginAnimations:nil context:context];
+    [UIView setAnimationDuration:0.5];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(endAnimation)];
+    
+    [self.recordButton setTransform:CGAffineTransformMakeScale(1.2, 1.2)];
+    [self.recordButton setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
+    [UIView commitAnimations];
+}
+
 // Next step
 //   How to handle google query in config
 
@@ -59,15 +72,7 @@
     
     [ConfigGetter getConfig:self];
     
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    [UIView beginAnimations:nil context:context];
-    [UIView setAnimationDuration:0.5];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(endAnimation)];
-    
-    [self.recordButton setTransform:CGAffineTransformMakeScale(1.2, 1.2)];
-    [self.recordButton setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
-    [UIView commitAnimations];
+    [self startRecordingAnimation];
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
