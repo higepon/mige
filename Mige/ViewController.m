@@ -16,6 +16,7 @@
 @property UIButton* recordButton;
 @property UILabel* commandLabel;
 @property SpeechToTextModule* speechToText;
+@property BOOL animationShouldStop;
 
 @end
 
@@ -57,16 +58,17 @@
     [self.recordButton addTarget:self
             action:@selector(record:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview: self.recordButton];
-    
+    [self record:self.recordButton];
     [ConfigGetter getConfig:self];
     
-    [self startRecordingAnimation];
+
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
 // This is called when SpeechToText posts audio data to Google API
 - (void)showLoadingView
 {
+    self.animationShouldStop = YES;
     self.commandLabel.text = @"processing...";    
 }
 
@@ -164,20 +166,29 @@
 - (void)record:(UIButton*)button
 {
     self.commandLabel.text = @"recording...";
-
+    [self startRecordingAnimation];
     [self.speechToText beginRecording];
 }
 
-- (void)startRecordingAnimation
+- (void)recordingAnimationLoop
 {
     static double angle = 0;
+    if (self.animationShouldStop) {
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        [UIView beginAnimations:nil context:context];
+        [UIView setAnimationDuration:0.15];
+        [UIView setAnimationDelegate:self];
+        [self.recordButton  setTransform:CGAffineTransformMakeRotation(0)];
+        [UIView commitAnimations];
+        return;
+    }
     angle += 0.125;
     CGContextRef context = UIGraphicsGetCurrentContext();
     [UIView beginAnimations:nil context:context];
     [UIView setAnimationDuration:0.15];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(endAnimation)];
-
+    
 #if 0
     [self.recordButton setTransform:CGAffineTransformMakeScale(1.02, 1.02)];
     [self.recordButton setTransform:CGAffineTransformMakeScale(1.04, 1.04)];
@@ -191,9 +202,18 @@
     [UIView commitAnimations];
 }
 
+- (void)startRecordingAnimation
+{
+    self.animationShouldStop = NO;
+    [self recordingAnimationLoop];
+}
+
 - (void)endAnimation
 {
-    [self startRecordingAnimation];
+    if (self.animationShouldStop) {
+        return;
+    }
+    [self recordingAnimationLoop];
 }
 
 - (void)stop:(UIButton*)button
