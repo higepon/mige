@@ -31,18 +31,6 @@
 // Tweet URL
 // Google search
 
-- (void)startRecordingAnimation
-{
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    [UIView beginAnimations:nil context:context];
-    [UIView setAnimationDuration:0.5];
-    [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(endAnimation)];
-    
-    [self.recordButton setTransform:CGAffineTransformMakeScale(1.2, 1.2)];
-    [self.recordButton setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
-    [UIView commitAnimations];
-}
 
 // Next step
 //   How to handle google query in config
@@ -180,9 +168,33 @@
     [self.speechToText beginRecording];
 }
 
+double angle = 0.125;
+
+- (void)startRecordingAnimation
+{
+    angle += 0.125;
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    [UIView beginAnimations:nil context:context];
+    [UIView setAnimationDuration:0.15];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(endAnimation)];
+
+#if 0
+    [self.recordButton setTransform:CGAffineTransformMakeScale(1.02, 1.02)];
+    [self.recordButton setTransform:CGAffineTransformMakeScale(1.04, 1.04)];
+    [self.recordButton setTransform:CGAffineTransformMakeScale(1.06, 1.06)];
+    [self.recordButton setTransform:CGAffineTransformMakeScale(1.04, 1.04)];
+    [self.recordButton setTransform:CGAffineTransformMakeScale(1.02, 1.02)];
+    [self.recordButton setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
+#endif
+    [self.recordButton  setTransform:CGAffineTransformMakeRotation(angle * M_PI)];
+    
+    [UIView commitAnimations];
+}
+
 - (void)endAnimation
 {
-    NSLog(@"end animation");
+    [self startRecordingAnimation];
 }
 
 - (void)stop:(UIButton*)button
