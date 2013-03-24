@@ -174,6 +174,7 @@
 {
     static double angle = 0;
     if (self.animationShouldStop) {
+        NSLog(@"HHHH");
         CGContextRef context = UIGraphicsGetCurrentContext();
         [UIView beginAnimations:nil context:context];
         [UIView setAnimationDuration:0.15];
@@ -210,9 +211,6 @@
 
 - (void)endAnimation
 {
-    if (self.animationShouldStop) {
-        return;
-    }
     [self recordingAnimationLoop];
 }
 
