@@ -16,7 +16,7 @@
 @property UIButton* recordButton;
 @property UILabel* commandLabel;
 @property SpeechToTextModule* speechToText;
-@property BOOL animationShouldStop;
+@property BOOL animationShouldEventuallyStop;
 @property int angle;
 
 @end
@@ -70,7 +70,7 @@
 // This is called when SpeechToText posts audio data to Google API
 - (void)showLoadingView
 {
-    self.animationShouldStop = YES;
+    self.animationShouldEventuallyStop = YES;
     self.commandLabel.text = @"processing...";    
 }
 
@@ -174,7 +174,7 @@
 
 - (void)recordingAnimationLoop
 {
-    if (self.animationShouldStop && self.angle % 8 != 1) {
+    if (self.animationShouldEventuallyStop && self.angle % 8 != 1) {
         NSLog(@"HHHH");
         CGContextRef context = UIGraphicsGetCurrentContext();
         [UIView beginAnimations:nil context:context];
@@ -185,7 +185,7 @@
         self.angle++;
         [UIView commitAnimations];
         return;
-    } else if (self.animationShouldStop) {
+    } else if (self.animationShouldEventuallyStop) {
         NSLog(@"should come here %d", self.angle);
         
         // do nothing
@@ -208,7 +208,7 @@
 
 - (void)startRecordingAnimation
 {
-    self.animationShouldStop = NO;
+    self.animationShouldEventuallyStop = NO;
     [self recordingAnimationLoop];
 }
 
