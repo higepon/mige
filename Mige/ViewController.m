@@ -17,6 +17,7 @@
 @property UILabel* commandLabel;
 @property SpeechToTextModule* speechToText;
 @property BOOL animationShouldStop;
+@property int angle;
 
 @end
 
@@ -39,6 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.angle = 0;
     self.view.backgroundColor = [UIColor blackColor];
     self.speechToText = [[SpeechToTextModule alloc] init];
     self.speechToText.delegate = self;
@@ -172,18 +174,27 @@
 
 - (void)recordingAnimationLoop
 {
-    static double angle = 0;
-    if (self.animationShouldStop) {
+    if (self.animationShouldStop && self.angle % 8 != 1) {
         NSLog(@"HHHH");
         CGContextRef context = UIGraphicsGetCurrentContext();
         [UIView beginAnimations:nil context:context];
         [UIView setAnimationDuration:0.15];
         [UIView setAnimationDelegate:self];
-        [self.recordButton  setTransform:CGAffineTransformMakeRotation(0)];
+        [UIView setAnimationDidStopSelector:@selector(endAnimation)];        
+        [self.recordButton  setTransform:CGAffineTransformMakeRotation(0.125 * self.angle * 2 * M_PI)];
+        self.angle++;
         [UIView commitAnimations];
         return;
+    } else if (self.animationShouldStop) {
+        NSLog(@"should come here %d", self.angle);
+        
+        // do nothing
+        return;
     }
-    angle += 0.125;
+    self.angle ++;
+    if (self.angle == 8) {
+        self.angle = 0;
+    }
     CGContextRef context = UIGraphicsGetCurrentContext();
     [UIView beginAnimations:nil context:context];
     [UIView setAnimationDuration:0.15];
@@ -198,7 +209,7 @@
     [self.recordButton setTransform:CGAffineTransformMakeScale(1.02, 1.02)];
     [self.recordButton setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
 #endif
-    [self.recordButton  setTransform:CGAffineTransformMakeRotation(angle * M_PI)];
+    [self.recordButton  setTransform:CGAffineTransformMakeRotation(0.125 * self.angle * 2 * M_PI)];
     
     [UIView commitAnimations];
 }
