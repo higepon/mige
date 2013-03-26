@@ -11,6 +11,12 @@
 #import "Launcher.h"
 #import "ConfigGetter.h"
 
+typedef enum {
+    STATE_RECORDING,
+    STATE_PROCESSING,
+    STATE_STOP
+} State;
+
 @interface ViewController () <SpeechToTextModuleDelegate, ConfigGetterDelegate>
 
 @property UIButton* recordButton;
@@ -18,6 +24,7 @@
 @property SpeechToTextModule* speechToText;
 @property BOOL animationShouldEventuallyStop;
 @property int rotationIndex;
+@property State state;
 
 @end
 
@@ -27,6 +34,8 @@
 {
     [super viewDidLoad];
     self.rotationIndex = 0;
+    self.animationShouldEventuallyStop = NO;
+    self.state = STATE_STOP;
     self.view.backgroundColor = [UIColor blackColor];
     self.speechToText = [[SpeechToTextModule alloc] init];
     self.speechToText.delegate = self;
@@ -57,6 +66,7 @@
 - (void)showLoadingView
 {
     self.animationShouldEventuallyStop = YES;
+    self.state = STATE_PROCESSING;
     self.commandLabel.text = @"processing...";    
 }
 
@@ -147,14 +157,18 @@
         }
     }
     NSLog(@"command was %@", self.commandLabel.text);
+    self.state = STATE_STOP;
     return YES;
 }
 
 - (void)record:(UIButton*)button
 {
-    self.commandLabel.text = @"recording...";
-    [self startRecordingAnimation];
-    [self.speechToText beginRecording];
+    if (self.state == STATE_STOP) {
+        self.commandLabel.text = @"recording...";
+        self.state = STATE_RECORDING;
+        [self startRecordingAnimation];
+        [self.speechToText beginRecording];
+    }
 }
 
 - (void)recordingAnimationLoop
