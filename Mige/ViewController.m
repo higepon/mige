@@ -23,20 +23,6 @@
 
 @implementation ViewController
 
-// Make the button bigger
-// Start recording whenever it's comming foreground.
-//   No need to push the button
-//   show status "recording" or "stop"
-// Register more commands
-// Good parts
-//   search parts available for free
-// Tweet URL
-// Google search
-
-
-// Next step
-//   How to handle google query in config
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -78,7 +64,6 @@
 {
     [self.speechToText beginRecording];
     self.commandLabel.text = @"recording...";
-
 }
 
 - (NSString*)extractTextFromJson:(NSData*)data
