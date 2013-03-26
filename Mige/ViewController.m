@@ -201,14 +201,6 @@
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(endAnimation)];
     
-#if 0
-    [self.recordButton setTransform:CGAffineTransformMakeScale(1.02, 1.02)];
-    [self.recordButton setTransform:CGAffineTransformMakeScale(1.04, 1.04)];
-    [self.recordButton setTransform:CGAffineTransformMakeScale(1.06, 1.06)];
-    [self.recordButton setTransform:CGAffineTransformMakeScale(1.04, 1.04)];
-    [self.recordButton setTransform:CGAffineTransformMakeScale(1.02, 1.02)];
-    [self.recordButton setTransform:CGAffineTransformMakeScale(1.0, 1.0)];
-#endif
     [self.recordButton  setTransform:CGAffineTransformMakeRotation(0.125 * self.angle * 2 * M_PI)];
     
     [UIView commitAnimations];
