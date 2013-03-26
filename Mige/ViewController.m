@@ -174,14 +174,16 @@
 
 - (void)recordingAnimationLoop
 {
-    if (self.animationShouldEventuallyStop && self.angle % 8 != 1) {
+    const double ANGLE_DELTA = 0.125;
+    const int MAX_ROTATE_INDEX = 1 / ANGLE_DELTA;
+    if (self.animationShouldEventuallyStop && self.angle % MAX_ROTATE_INDEX != 1) {
         NSLog(@"HHHH");
         CGContextRef context = UIGraphicsGetCurrentContext();
         [UIView beginAnimations:nil context:context];
         [UIView setAnimationDuration:0.15];
         [UIView setAnimationDelegate:self];
         [UIView setAnimationDidStopSelector:@selector(endAnimation)];        
-        [self.recordButton  setTransform:CGAffineTransformMakeRotation(0.125 * self.angle * 2 * M_PI)];
+        [self.recordButton  setTransform:CGAffineTransformMakeRotation(ANGLE_DELTA * self.angle * 2 * M_PI)];
         self.angle++;
         [UIView commitAnimations];
         return;
@@ -192,7 +194,7 @@
         return;
     }
     self.angle ++;
-    if (self.angle == 8) {
+    if (self.angle == MAX_ROTATE_INDEX) {
         self.angle = 0;
     }
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -201,7 +203,7 @@
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(endAnimation)];
     
-    [self.recordButton  setTransform:CGAffineTransformMakeRotation(0.125 * self.angle * 2 * M_PI)];
+    [self.recordButton  setTransform:CGAffineTransformMakeRotation(ANGLE_DELTA * self.angle * 2 * M_PI)];
     
     [UIView commitAnimations];
 }
