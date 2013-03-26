@@ -34,7 +34,6 @@ typedef enum {
 {
     [super viewDidLoad];
     self.rotationIndex = 0;
-    self.animationShouldEventuallyStop = NO;
     self.state = STATE_STOP;
     self.view.backgroundColor = [UIColor blackColor];
     self.speechToText = [[SpeechToTextModule alloc] init];
@@ -65,7 +64,6 @@ typedef enum {
 // This is called when SpeechToText posts audio data to Google API
 - (void)showLoadingView
 {
-    self.animationShouldEventuallyStop = YES;
     self.state = STATE_PROCESSING;
     self.commandLabel.text = @"processing...";    
 }
@@ -176,7 +174,7 @@ typedef enum {
     const double ANGLE_DELTA = 0.125;
     const int MAX_ROTATION_INDEX = 1 / ANGLE_DELTA;
     BOOL buttonInOrigin = self.rotationIndex % MAX_ROTATION_INDEX == 1;
-    BOOL animationStopImmediately = self.animationShouldEventuallyStop && buttonInOrigin;
+    BOOL animationStopImmediately = (self.state != STATE_RECORDING) && buttonInOrigin;
     if (animationStopImmediately) {
         return;
     }
