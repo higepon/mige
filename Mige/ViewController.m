@@ -19,6 +19,7 @@ typedef enum {
 
 @interface ViewController () <SpeechToTextModuleDelegate, ConfigGetterDelegate>
 
+@property NSDictionary* config;
 @property UIButton* recordButton;
 @property UILabel* commandLabel;
 @property SpeechToTextModule* speechToText;
@@ -33,6 +34,7 @@ typedef enum {
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.config = NULL;
     self.rotationIndex = 0;
     self.state = STATE_STOP;
     self.view.backgroundColor = [UIColor blackColor];
@@ -89,63 +91,41 @@ typedef enum {
 
 
 
+- (NSDictionary *)defaultConfig
+{
+    static NSDictionary* config = NULL;
+    if (config == NULL) {
+#if 0
+        config = [[NSDictionary alloc] initWithObjectsAndKeys:
+                                 @"comgooglemaps://?saddr=&daddr=Suite+900,+1355+Market+St,+San+Francisco,+CA&directionsmode=transit", @"directions to Twitter",
+                                 @"twitter://post?message=", @"Twitter",
+                                 @"fb://publish/?text=", @"Facebook",
+                                 @"twitter://timeline", @"home",
+                                 @"twitter://mentions", @"connect",
+                                 @"googlegmail://co?subject=&body=&to=higepon@gmail.com", @"Gmail",
+                                 @"camplus://", @"camera",
+                                 @"foursquare://", @"Foursquare",
+                  @"jp.gocro.smartnews://", @"news", nil];
+#else
+        config = [[NSDictionary alloc] init];
+#endif
+    }
+    return config;
+}
+
 - (BOOL)didReceiveVoiceResponse:(NSData *)data
 {
-//    NSDictionary* googleSearch = [[NSDictionary alloc] initWithObjectsAndKeys:@"num_params", 2, @"url", @"http://www.google.com/search?q=%s", nil];
-    NSDictionary* commandDict = [[NSDictionary alloc] initWithObjectsAndKeys:
-                                 @"comgooglemaps://?saddr=&daddr=Suite+900,+1355+Market+St,+San+Francisco,+CA&directionsmode=transit", @"directions to Twitter",
-                                    @"twitter://post?message=", @"Twitter", @"fb://publish/?text=", @"Facebook",
-                                    @"twitter://timeline", @"home",
-                                    @"twitter://mentions", @"connect",
-                                    @"googlegmail://co?subject=&body=&to=higepon@gmail.com", @"Gmail",
-//                                    googleSearch, @"Google",
-                                    @"camplus://", @"camera",
-                                 @"foursquare://", @"Foursquare",
-                                    @"jp.gocro.smartnews://", @"news", nil];
-
-    
-    
+    NSDictionary* config = self.config == NULL ? [self defaultConfig] : self.config;
     self.commandLabel.text = [self extractTextFromJson:data];
     NSArray* words = [self.commandLabel.text componentsSeparatedByString: @" "];    
-    // split by string
-    // if first word is found at the dictionary, then get value as Dictionary
-    //   check the keyword length
-    //   tokenize
-    //   check the length
-    //   create url
-    //   then go
-    //   anything else
-/*
-    // split string
-    NSArray* words = [self.commandLabel.text componentsSeparatedByString: @" "];
-    if ([words count] > 1) {
-        NSString* first = [words objectAtIndex:0];
-        NSDictionary* action = [commandDict objectForKey:first];
-        if (action) {
-            NSNumber* numParams = [action objectForKey:@"num_params"];
-            if ([words count] - 1 == numParams.intValue) {
-                NSString* url = [action objectForKey:@"url"];
-                NSString* result = url;
-                if (url) {
-                    for (int i = 0; i < numparams.intValue; i++) {
-                        result = [NSString stringWithFormat:result, []
-                    }
-                    
-                }
-            }
-            
-        }
-    }
-    
-    NSLog(@"%@", words);
-                                  */
+
     NSString* url;
     if ([words count] > 1 && [[words objectAtIndex:0] isEqualToString:@"Google"]) {
         
         NSArray* keywords = [words subarrayWithRange:NSMakeRange(1, words.count - 1)];
         url = [NSString stringWithFormat:@"http://www.google.com/search?q=%@", [keywords componentsJoinedByString:@"%20"]];
     } else {
-        url = [commandDict objectForKey:self.commandLabel.text];
+        url = [config objectForKey:self.commandLabel.text];
     }
     if (url) {
         if ([Launcher tryOpenURL:url]) {
@@ -156,6 +136,9 @@ typedef enum {
     }
     NSLog(@"command was %@", self.commandLabel.text);
     self.state = STATE_STOP;
+    if ([self.commandLabel.text isEqualToString:@""]) {
+        [self record:self.recordButton];
+    }
     return YES;
 }
 
@@ -215,5 +198,6 @@ typedef enum {
 - (void)didReceiveConfig:(NSDictionary *)config
 {
     NSLog(@"Config=%@", config);
+    self.config = config;
 }
 @end
