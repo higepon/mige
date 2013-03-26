@@ -17,7 +17,7 @@
 @property UILabel* commandLabel;
 @property SpeechToTextModule* speechToText;
 @property BOOL animationShouldEventuallyStop;
-@property int angle;
+@property int rotationIndex;
 
 @end
 
@@ -40,7 +40,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.angle = 0;
+    self.rotationIndex = 0;
     self.view.backgroundColor = [UIColor blackColor];
     self.speechToText = [[SpeechToTextModule alloc] init];
     self.speechToText.delegate = self;
@@ -175,36 +175,20 @@
 - (void)recordingAnimationLoop
 {
     const double ANGLE_DELTA = 0.125;
-    const int MAX_ROTATE_INDEX = 1 / ANGLE_DELTA;
-    if (self.animationShouldEventuallyStop && self.angle % MAX_ROTATE_INDEX != 1) {
-        NSLog(@"HHHH");
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        [UIView beginAnimations:nil context:context];
-        [UIView setAnimationDuration:0.15];
-        [UIView setAnimationDelegate:self];
-        [UIView setAnimationDidStopSelector:@selector(endAnimation)];        
-        [self.recordButton  setTransform:CGAffineTransformMakeRotation(ANGLE_DELTA * self.angle * 2 * M_PI)];
-        self.angle++;
-        [UIView commitAnimations];
-        return;
-    } else if (self.animationShouldEventuallyStop) {
-        NSLog(@"should come here %d", self.angle);
-        
-        // do nothing
+    const int MAX_ROTATION_INDEX = 1 / ANGLE_DELTA;
+    BOOL buttonInOrigin = self.rotationIndex % MAX_ROTATION_INDEX == 1;
+    BOOL animationStopImmediately = self.animationShouldEventuallyStop && buttonInOrigin;
+    if (animationStopImmediately) {
         return;
     }
-    self.angle ++;
-    if (self.angle == MAX_ROTATE_INDEX) {
-        self.angle = 0;
-    }
+    
     CGContextRef context = UIGraphicsGetCurrentContext();
     [UIView beginAnimations:nil context:context];
     [UIView setAnimationDuration:0.15];
     [UIView setAnimationDelegate:self];
     [UIView setAnimationDidStopSelector:@selector(endAnimation)];
-    
-    [self.recordButton  setTransform:CGAffineTransformMakeRotation(ANGLE_DELTA * self.angle * 2 * M_PI)];
-    
+    [self.recordButton  setTransform:CGAffineTransformMakeRotation(ANGLE_DELTA * self.rotationIndex * 2 * M_PI)];
+    self.rotationIndex++;
     [UIView commitAnimations];
 }
 
